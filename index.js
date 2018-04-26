@@ -20,14 +20,15 @@ bot.on('message_received', function(message, session) {
         case 'lookup':
           const name = firstEntity(message.nlp, 'name');
           console.log(name);
-          https.get('https://moses.giang.xyz/members', res => {
+          https.get('https://moses.giang.xyz/members?q=' + name.value, res => {
+            console.log(res);
             res.setEncoding("utf8");
             let body = "";
             res.on("data", data => {
               body += data;
             });
             res.on("end", () => {
-              body = JSON.parse(body);
+              //body = JSON.parse(body);
               console.log(body);
             });
           });
