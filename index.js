@@ -16,8 +16,8 @@ bot.on('message_received', function(message, session) {
   if (intent) {
     confidence = intent['confidence'];
     if (confidence > 0.80) {
-    	switch (intent['value']) {
-    		case 'lookup':
+      switch (intent['value']) {
+        case 'lookup':
           const name = firstEntity(message.nlp, 'name');
           console.log(name);
           https.get('https://moses.giang.xyz/members', res => {
@@ -31,13 +31,13 @@ bot.on('message_received', function(message, session) {
               console.log(body);
             });
           });
-    			break;
-    		case 'greetings':
+          break;
+        case 'greetings':
           session.send('Tôi có thể giúp gì được cho bạn?')
           break;
         default:
           session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé! 1')
-    	}
+      }
       //return;
     }
   }
