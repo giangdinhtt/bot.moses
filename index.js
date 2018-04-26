@@ -17,12 +17,15 @@ bot.on('message_received', function(message, session) {
     confidence = intent['confidence'];
     if (confidence > 0.80) {
       switch (intent['value']) {
+        case 'greetings':
+          session.send('Tôi có thể giúp gì được cho bạn?')
+          break;
         case 'lookup':
           const name = firstEntity(message.nlp, 'name');
           console.log(name);
           https.get('https://moses.giang.xyz/members?q=' + name.value, res => {
             if (res.statusCode != 200) {
-              session.send("Troll tôi à, làm gì có ai tên là '" + name.value + "'' tham gia sa mạc đâu")
+              session.send("Èo, không tìm thấy ai tên là '" + name.value + "' hết, dạo này trí nhớ có vấn đề rồi")
             }
             res.setEncoding("utf8");
             let body = "";
@@ -32,20 +35,21 @@ bot.on('message_received', function(message, session) {
             res.on("end", () => {
               console.log(body);
               var members = JSON.parse(body);
-              for (var i = 0, len = members.length; i < len; i++) {
+              var count = members.length;
+              if (count == 0) {
+                session.send("Troll tôi à, làm gì có ai tên là '" + name.value + "'' tham gia sa mạc đâu")
+              }
+              for (var i = 0, i < count; i++) {
                 var member = members[i];
                 session.send(member['name'] + ' - Đội ' + member['team'] + ' - ' + member['phone'])
               }
             });
           });
           break;
-        case 'greetings':
-          session.send('Tôi có thể giúp gì được cho bạn?')
-          break;
         default:
           session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé! 1')
       }
-      //return;
+      return;
     }
   }
 
