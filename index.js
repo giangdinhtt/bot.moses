@@ -31,8 +31,11 @@ bot.on('message_received', function(message, session) {
             });
             res.on("end", () => {
               console.log(body);
-              var member = JSON.parse(body);
-              session.send(member['name'] + ' - Đội ' + member['team'] + ' - ' + member['phone'])
+              var members = JSON.parse(body);
+              for (var i = 0, len = members.length; i < len; i++) {
+                var member = members[i];
+                session.send(member['name'] + ' - Đội ' + member['team'] + ' - ' + member['phone'])
+              }
             });
           });
           break;
