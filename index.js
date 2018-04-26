@@ -21,15 +21,18 @@ bot.on('message_received', function(message, session) {
           const name = firstEntity(message.nlp, 'name');
           console.log(name);
           https.get('https://moses.giang.xyz/members?q=' + name.value, res => {
-            console.log(res);
+            if (res.statusCode != 200) {
+              session.send("Troll tôi à, làm gì có ai tên là '" + name.value + "'' tham gia sa mạc đâu")
+            }
             res.setEncoding("utf8");
             let body = "";
             res.on("data", data => {
               body += data;
             });
             res.on("end", () => {
-              //body = JSON.parse(body);
               console.log(body);
+              var member = JSON.parse(body);
+              session.send(member['name'] + ' - Đội ' + member['team'] + ' - ' + member['phone'])
             });
           });
           break;
