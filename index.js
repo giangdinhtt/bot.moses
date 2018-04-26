@@ -25,7 +25,7 @@ bot.on('message_received', function(message, session) {
           console.log(name);
           https.get('https://moses.giang.xyz/members?q=' + name.value, res => {
             if (res.statusCode != 200) {
-              session.send("Èo, không tìm thấy ai tên là '" + name.value + "' hết, dạo này trí nhớ có vấn đề rồi")
+              session.send("Èo, không nhớ có ai tên là *" + name.value + "* hết, dạo này trí nhớ có vấn đề rồi")
             }
             res.setEncoding("utf8");
             let body = "";
@@ -37,9 +37,9 @@ bot.on('message_received', function(message, session) {
               var members = JSON.parse(body);
               var count = members.length;
               if (count == 0) {
-                session.send("Troll tôi à, làm gì có ai tên là '" + name.value + "'' tham gia sa mạc đâu")
+                session.send("Troll tôi à, làm gì có ai tên là *" + name.value + "* tham gia sa mạc đâu o.O")
               }
-              for (var i = 0, i < count; i++) {
+              for (var i = 0; i < count; i++) {
                 var member = members[i];
                 session.send(member['name'] + ' - Đội ' + member['team'] + ' - ' + member['phone'])
               }
@@ -47,13 +47,13 @@ bot.on('message_received', function(message, session) {
           });
           break;
         default:
-          session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé! 1')
+          session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu theo tên thôi nhé! 1')
       }
       return;
     }
   }
 
-  session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé!')
+  session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu theo tên thôi nhé!')
 
   //session.send('Tôi có thể giúp gì được cho bạn?')
 })
