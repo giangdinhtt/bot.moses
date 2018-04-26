@@ -11,6 +11,7 @@ function firstEntity(nlp, name) {
 }
 
 bot.on('message_received', function(message, session) {
+  console.log(intent);
   const intent = firstEntity(message.nlp, 'intent');
   if (intent) {
     confidence = intent['confidence'];
@@ -18,6 +19,7 @@ bot.on('message_received', function(message, session) {
     	switch (intent['value']) {
     		case 'lookup':
           const name = firstEntity(message.nlp, 'name');
+          console.log(name);
           https.get('https://moses.giang.xyz/members', res => {
             res.setEncoding("utf8");
             let body = "";
@@ -27,7 +29,6 @@ bot.on('message_received', function(message, session) {
             res.on("end", () => {
               body = JSON.parse(body);
               console.log(body);
-              );
             });
           });
     			break;
