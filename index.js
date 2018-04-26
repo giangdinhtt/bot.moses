@@ -11,11 +11,11 @@ function firstEntity(nlp, name) {
 }
 
 bot.on('message_received', function(message, session) {
-  console.log(intent);
   const intent = firstEntity(message.nlp, 'intent');
+  console.log(intent);
   if (intent) {
     confidence = intent['confidence'];
-    if (confidence > 80.0) {
+    if (confidence > 0.80) {
     	switch (intent['value']) {
     		case 'lookup':
           const name = firstEntity(message.nlp, 'name');
@@ -36,9 +36,9 @@ bot.on('message_received', function(message, session) {
           session.send('Tôi có thể giúp gì được cho bạn?')
           break;
         default:
-          session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé!')
+          session.send('Chưa hiểu ý bạn lắm, tôi chỉ hỗ trợ việc tra cứu tên thôi nhé! 1')
     	}
-      return;
+      //return;
     }
   }
 
